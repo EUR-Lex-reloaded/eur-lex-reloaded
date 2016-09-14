@@ -96,7 +96,7 @@ end
 
 # now generate a table of contents and related anchors
 toc_base_url = SCRIPT_URL.dup
-toc_base_url.query = "url=#{URI.escape base_url.to_s}"
+toc_base_url.query = "url=#{URI.escape base_url.to_s, /[\?\/#:]/}"
 toc = Nokogiri::XML::Element.new 'div', doc
 toc[:class] = 'toc'
 toc_header = Nokogiri::XML::Element.new 'h3', doc
