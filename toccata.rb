@@ -5,10 +5,38 @@ require 'uri'
 require 'cgi'
 require 'open-uri'
 
-SCRIPT_URL = URI.parse('http://localhost/cgi-bin/toccata.rb').freeze
+# find out where we are running...
+scheme = ENV['REQUEST_SCHEME']
+host = ENV['HTTP_HOST'] || ENV['SERVER_NAME']
+port = (ENV['SERVER_PORT'] == '80') ? "" : ":#{ENV['SERVER_PORT']}"
+path = ENV['REQUEST_URI']
+SCRIPT_URL = URI.parse("#{scheme}://#{host}#{port}#{path}").freeze
 
+# get document from request param url
 cgi = CGI.new
-base_url = URI.parse(cgi['url'])
+begin
+  base_url = URI.parse(cgi['url'])
+  case base_url
+    when URI::HTTP, URI::HTTPS
+    else
+      raise 'foo'
+  end
+rescue StandardError
+  cgi.out do
+    <<-EOD
+      <html>
+        <head>
+          <title>Error: You need to supply a document URL</title>
+        </head>
+        <body>
+          <h1>Error</h1>
+          <p>You need to supply a document URL as <tt>url</tt> request param.</p>
+        </body>
+      </html>
+    EOD
+  end
+  exit
+end
 doc = Nokogiri::HTML::Document.parse base_url.read
 
 # add base href to head to make styles and scripts work...
