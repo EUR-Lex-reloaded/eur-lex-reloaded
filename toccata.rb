@@ -6,7 +6,7 @@ require 'cgi'
 require 'open-uri'
 
 # find out where we are running...
-scheme = ENV['REQUEST_SCHEME']
+scheme = ENV['REQUEST_SCHEME'] || 'http'
 host = ENV['HTTP_HOST'] || ENV['SERVER_NAME']
 port = (ENV['SERVER_PORT'] == '80') ? "" : ":#{ENV['SERVER_PORT']}"
 path = ENV['REQUEST_URI']
