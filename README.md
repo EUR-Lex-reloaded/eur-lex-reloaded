@@ -32,3 +32,10 @@ If you want to automize the deployment you can adapt the [./deploy.sh]() to your
 ${HOME}/bin/deploy.sh
 ```
 Then with every `git push' , your system gets updated.
+
+## License
+You can use this code under the [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.html).
+
+The use of the EUR-Lex documents for these purposes to me seems covered by the Open Access Policy and licensing terms I found on their website: http://eur-lex.europa.eu/content/legal-notice/legal-notice.html#droits
+
+Disclaimer: I am not a lawyer, therefore I might be wrong on this. I will not take any responsibility or liability related to the usage of the code of this project.
